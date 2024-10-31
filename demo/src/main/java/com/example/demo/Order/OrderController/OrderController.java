@@ -2,7 +2,9 @@ package com.example.demo.Order.OrderController;
 import com.example.demo.DTO.OrderDto.CartDto;
 import com.example.demo.DTO.OrderDto.ProductOfCart;
 import com.example.demo.Order.OrderEntity.Orders;
+import com.example.demo.Order.OrderRepository.OrderRepository;
 import com.example.demo.Order.OrderService.CreateCartService;
+import com.example.demo.Order.OrderService.DeleteDetailOrderById;
 import com.example.demo.Order.OrderService.SaveCartService;
 import com.example.demo.Order.OrderService.SaveOrderDetail;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -54,6 +56,26 @@ public class OrderController {
             return new ResponseEntity<>( HttpStatus.CREATED);
         }
         return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+
+
+    }
+    @Autowired
+    private DeleteDetailOrderById deleteDetailOrderById;
+    @Autowired
+    private OrderRepository orderRepository;
+
+    @PostMapping("/deleteDetailOrder")
+    public ResponseEntity<Void> deleteDetailOrder(@RequestParam Long id)
+    {
+        Orders order = orderRepository.findById(id).orElseThrow(() -> new RuntimeException("Order with ID " + id + " not found"));
+        boolean isSaveProduct = deleteDetailOrderById.deleteOrderDetail(order);
+        if( isSaveProduct == true )
+        {
+            return new ResponseEntity<>( HttpStatus.CREATED);
+        }
+        return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+
+
     }
 
 

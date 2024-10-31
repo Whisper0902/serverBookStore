@@ -2,8 +2,8 @@ package com.example.demo.Product.ProductEntity;
 
 import com.example.demo.Order.OrderEntity.OrderDetail;
 import jakarta.persistence.*;
+import org.hibernate.annotations.DialectOverride;
 import org.springframework.stereotype.Repository;
-
 import java.math.BigDecimal;
 import java.util.List;
 
@@ -38,6 +38,16 @@ public class ProductEntity {
     @OneToMany(mappedBy = "bookId", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<OrderDetail> bookId;
 
+    @Version
+    private int version;
+
+    public int getVersion() {
+        return version;
+    }
+
+    public void setVersion(int version) {
+        this.version = version;
+    }
 
     public ProductEntity() {
     }

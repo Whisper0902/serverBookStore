@@ -13,12 +13,13 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import java.math.BigDecimal;
-import java.util.HashMap;
+import org.springframework.transaction.annotation.Transactional;
+
 import java.util.List;
-import java.util.Map;
+
 
 @Service
+
 public class SaveOrderDetail {
 
     @Autowired
@@ -30,6 +31,12 @@ public class SaveOrderDetail {
     @Autowired
     private UpdateProductService updateProductService;
 
+    @Autowired
+    private CheckQuantityOfProduct checkQuantityOfProduct;
+    @Autowired
+    private DeleteDetailOrderById deleteDetailOrderById;
+
+    @Transactional(rollbackFor = Exception.class)
     public Boolean saveOrderDetail(List<ProductOfCart> productOfCart, Long id) {
         if (productOfCart == null ) {
             return false;
@@ -37,7 +44,8 @@ public class SaveOrderDetail {
 
         try {
 
-            Orders order = orderRepository.findById(id).orElseThrow(() -> new RuntimeException("Order with ID " + id + " not found"));
+            Orders order = orderRepository.findById(id)
+                    .orElseThrow(() -> new RuntimeException("Order with ID " + id + " not found"));
 
             for(var listProduct : productOfCart)
             {
@@ -45,31 +53,43 @@ public class SaveOrderDetail {
                orderDetail.setOrderId(order);
                orderDetail.setUpdateTime(listProduct.getUpdateTime());
                orderDetail.setQuantity(listProduct.getQuantity());
-               ProductEntity product = listProduct.getBookId();
-               /// Available quantity of product after adding products to the cart
-               BigDecimal  availableQuantity = product.getQuantity().subtract(listProduct.getQuantity());
-                if (availableQuantity.compareTo(BigDecimal.ZERO) <= 0) {
-                    System.out.println("Out of Stoke");
-                    System.out.println("Remaining quantity of "+listProduct.getBookId().getTitle()+ " " + product.getQuantity());
-                    return false;
+                orderDetail.setCreated(listProduct.getCreated());
+                orderDetail.setBookId(listProduct.getBookId());
+                orderDetail.setTotal(listProduct.getTotal());
+
+
+                boolean success = checkQuantityOfProduct.purchaseProduct(listProduct.getBookId().getId(),listProduct.getQuantity());
+
+                if (success) {
+                    orderDetailRepository.save(orderDetail);
+                    System.out.println("Purchase successful");
+
+                } else {
+//                    deleteDetailOrderById.deleteOrderDetail(order);
+                    System.out.println("Not enough stock available");
+                    System.out.println(" Remaining Available of " +listProduct.getBookId().getTitle()+ ": " +listProduct.getBookId().getQuantity());
+                    throw new RuntimeException("Not enough stock for product " + listProduct.getBookId().getTitle()); // Ném ngoại lệ
+
                 }
-               Map<String,Object> mQuantity = new HashMap<>();
-               mQuantity.put("quantity",availableQuantity);
-                ProductEntity productEntity= updateProductService.updateProduct(mQuantity,listProduct.getBookId().getId());
-                System.out.println(productEntity);
 
-
-
-               orderDetail.setCreated(listProduct.getCreated());
-               orderDetail.setBookId(listProduct.getBookId());
-               orderDetail.setTotal(listProduct.getTotal());
-                orderDetailRepository.save(orderDetail);
             }
             return true;
         } catch (Exception e) {
-            Logger logger = LoggerFactory.getLogger(SaveCartService.class);
+            Logger logger = LoggerFactory.getLogger(SaveOrderDetail.class);
             logger.error("Error saving product of cart: {}", e.getMessage(), e);
-            return false;
+            throw e;
         }
     }
 }
+
+/// Available quantity of product after adding products to the cart
+//                ProductEntity product = listProduct.getBookId();
+//               BigDecimal  availableQuantity = product.getQuantity().subtract(listProduct.getQuantity());
+//                if (availableQuantity.compareTo(BigDecimal.ZERO) <= 0) {
+//                    System.out.println("Out of Stoke");
+//                    System.out.println("Remaining quantity of "+listProduct.getBookId().getTitle()+ " " + product.getQuantity());
+//                    return false;
+//                }
+//               Map<String,Object> mQuantity = new HashMap<>();
+//               mQuantity.put("quantity",availableQuantity);
+//                ProductEntity productEntity= updateProductService.updateProduct(mQuantity,listProduct.getBookId().getId());
