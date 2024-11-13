@@ -1,14 +1,11 @@
 package com.example.demo.Order.OrderService;
 
-
 import com.example.demo.DTO.OrderDto.ProductOfCart;
 import com.example.demo.Order.OrderEntity.OrderDetail;
 import com.example.demo.Order.OrderEntity.Orders;
 import com.example.demo.Order.OrderRepository.OrderDetailRepository;
 import com.example.demo.Order.OrderRepository.OrderRepository;
-import com.example.demo.Product.ProductEntity.ProductEntity;
 import com.example.demo.Product.ProductService.UpdateProductService;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +13,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-
 
 @Service
 

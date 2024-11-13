@@ -38,6 +38,7 @@ public class GetProductByFieldService {
                     String publisher = (String) value;
                     listProduct = bookRepository.findAllByPublisher(publisher);
                     break;
+
             }
         }
         return listProduct;

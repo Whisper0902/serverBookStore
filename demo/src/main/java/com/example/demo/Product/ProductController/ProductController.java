@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 
 @RestController
 @RequestMapping("/books")
@@ -31,15 +30,39 @@ public class ProductController {
     @Autowired
     private GetProductByFieldService getProductByFieldService;
 
+    @Autowired
+    private SearchProductService searchProductService;
+
+    @Autowired
+    private GetProductById getProductById;
+
+    @Autowired
+    private RemoveAccents removeAccents;
+
 
     @GetMapping("/GetHomepageProduct")
     public ResponseEntity<List<GetProductDto>> getHomepageProduct() {
         List<GetProductDto> productHomepage = getProductHomepageService.getProductHomepage() ;
+        if (productHomepage == null || productHomepage.isEmpty()) {
+            return new ResponseEntity<>( HttpStatus.NOT_FOUND);
+        }
         return new ResponseEntity<>(productHomepage, HttpStatus.CREATED);
     }
+    @GetMapping("/GetProductById")
+    public ResponseEntity<ProductEntity> GetProductById(@RequestParam Long id) {
+        ProductEntity product = getProductById.getProductById(id) ;
+        if (product == null ) {
+            return new ResponseEntity<>( HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<>(product, HttpStatus.CREATED);
+    }
+
     @GetMapping("/GetDetailProduct")
     public ResponseEntity<ProductEntity> getDetailProduct(@RequestParam Long id) {
         ProductEntity DetailProduct = getDetailProductService.getDetailProduct(id) ;
+        if (DetailProduct == null ) {
+            return new ResponseEntity<>( HttpStatus.NOT_FOUND);
+        }
         return new ResponseEntity<>(DetailProduct, HttpStatus.CREATED);
     }
 
@@ -47,12 +70,18 @@ public class ProductController {
     public ResponseEntity<List<ProductEntity>> getProductByField(@RequestParam Map<String,Object> field)
     {
         List<ProductEntity> productByField = getProductByFieldService.getProductByField(field);
+        if (productByField == null || productByField.isEmpty()) {
+            return new ResponseEntity<>( HttpStatus.NOT_FOUND);
+        }
         return new ResponseEntity<>(productByField, HttpStatus.CREATED);
     }
 
     @PostMapping("/DeleteById")
     public  ResponseEntity<ProductEntity> deleteProductById(@RequestParam Long id){
         ProductEntity deleteProduct = deleteProductByIdService.deleteProductById(id);
+        if (deleteProduct == null) {
+            return new ResponseEntity<>( HttpStatus.NOT_FOUND);
+        }
         return new ResponseEntity<>(deleteProduct, HttpStatus.ACCEPTED);
     }
 
@@ -60,14 +89,36 @@ public class ProductController {
     public ResponseEntity<ProductEntity> updateProductById(@RequestBody Map<String, Object> bookMapUpdate,@RequestParam Long id)
     {
         ProductEntity updateProduct = updateProductService.updateProduct(bookMapUpdate,id);
+        if (updateProduct == null) {
+            return new ResponseEntity<>( HttpStatus.NOT_FOUND);
+        }
         return new ResponseEntity<>(updateProduct, HttpStatus.CREATED);
     }
 
     @PostMapping("/import")
     public ResponseEntity<ProductEntity> importBook(@RequestBody DetailProductDto importBookDto) {
         ProductEntity savedBook = importProductService.saveBook(importBookDto);
+        if (savedBook == null) {
+            return new ResponseEntity<>( HttpStatus.NOT_FOUND);
+        }
         return new ResponseEntity<>(savedBook, HttpStatus.CREATED);
     }
+
+    @GetMapping("/searchProduct")
+    public ResponseEntity<List<ProductEntity>> searchProductEntity(@RequestParam String keyWord)
+    {
+
+        String valueKeyWord = removeAccents.removeAccent(keyWord);
+        List<ProductEntity> listSearchProduct = searchProductService.searchProduct(valueKeyWord);
+        if (listSearchProduct == null || listSearchProduct.isEmpty()) {
+
+            return new ResponseEntity<>( HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<>(listSearchProduct, HttpStatus.CREATED);
+
+    }
+
+
 
 
 }
