@@ -18,7 +18,7 @@ public class GetProductHomepageService {
     public List<GetProductDto> getProductHomepage ()
     {
 
-        List<ProductEntity> listDetail = productHomepage.findTop10ByOrderByIdAsc();
+        List<ProductEntity> listDetail = productHomepage.findTop8ByOrderByIdAsc();
         List<GetProductDto> listProductDto = new ArrayList<>();
         for(var listDetails : listDetail)
         {

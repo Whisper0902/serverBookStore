@@ -10,5 +10,5 @@ import java.util.List;
 public interface ProductHomepage extends JpaRepository<ProductEntity, Long> {
 
     // Lấy 10 sản phẩm đầu tiên
-    List<ProductEntity> findTop10ByOrderByIdAsc();
+    List<ProductEntity> findTop8ByOrderByIdAsc();
 }
