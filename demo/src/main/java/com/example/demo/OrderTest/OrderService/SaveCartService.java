@@ -1,8 +1,8 @@
-package com.example.demo.Order.OrderService;
+package com.example.demo.OrderTest.OrderService;
 
 import com.example.demo.DTO.OrderDto.CartDto;
-import com.example.demo.Order.OrderEntity.Orders;
-import com.example.demo.Order.OrderRepository.OrderRepository;
+import com.example.demo.OrderTest.OrderEntity.Orders;
+import com.example.demo.OrderTest.OrderRepository.OrderRepository;
 import jakarta.persistence.EntityNotFoundException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

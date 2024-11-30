@@ -1,7 +1,5 @@
 package com.example.demo.DTO.OrderDto;
 
-import com.example.demo.Customer.CustomerEntity.CustomerAccountEntity;
-import com.example.demo.Order.OrderEntity.Orders;
 import com.example.demo.Product.ProductEntity.ProductEntity;
 
 import java.math.BigDecimal;

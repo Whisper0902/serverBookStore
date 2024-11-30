@@ -2,7 +2,7 @@ package com.example.demo.Product.ProductService;
 import com.example.demo.DTO.ProductDto.DetailProductDto;
 import com.example.demo.Product.ProductEntity.ProductEntity;
 import com.example.demo.Product.ProductEntity.SearchEntity;
-import com.example.demo.Product.ProductRepository.BookRepository;
+import com.example.demo.Product.ProductRepository.ProductHomepage;
 import com.example.demo.Product.ProductRepository.SearchRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 public class ImportProductService {
 
         @Autowired
-        private BookRepository bookRepository;
+        private ProductHomepage productHomepage;
 
         @Autowired
         private SearchRepository searchRepository;
@@ -33,7 +33,7 @@ public class ImportProductService {
         book.setUrlImage(importBookDto.getUrlImage());
         book.setQuantity(importBookDto.getQuantity());
 
-        ProductEntity saveBook = bookRepository.save(book);
+        ProductEntity saveBook = productHomepage.save(book);
 
 
 

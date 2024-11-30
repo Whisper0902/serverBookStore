@@ -1,7 +1,7 @@
 package com.example.demo.Product.ProductService;
 
 import com.example.demo.Product.ProductEntity.ProductEntity;
-import com.example.demo.Product.ProductRepository.BookRepository;
+import com.example.demo.Product.ProductRepository.ProductHomepage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,7 +14,7 @@ public class GetProductByFieldService {
 
 
     @Autowired
-    private BookRepository bookRepository;
+    private ProductHomepage productHomepage;
 
 
     public List<ProductEntity> getProductByField(Map<String,Object> field)
@@ -28,15 +28,15 @@ public class GetProductByFieldService {
             switch (key){
                 case "genre":
                     String genre = (String) value;
-                    listProduct = bookRepository.findAllByGenre(genre);
+                    listProduct = productHomepage.findAllByGenre(genre);
                     break;
                 case "author":
                     String author = (String) value;
-                    listProduct = bookRepository.findAllByAuthor(author);
+                    listProduct = productHomepage.findAllByAuthor(author);
                     break;
                 case "publisher":
                     String publisher = (String) value;
-                    listProduct = bookRepository.findAllByPublisher(publisher);
+                    listProduct = productHomepage.findAllByPublisher(publisher);
                     break;
 
             }

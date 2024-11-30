@@ -1,18 +1,17 @@
-package com.example.demo.Order.OrderController;
+package com.example.demo.OrderTest.OrderController;
 import com.example.demo.DTO.OrderDto.CartDto;
 import com.example.demo.DTO.OrderDto.ProductOfCart;
-import com.example.demo.Order.OrderEntity.Orders;
-import com.example.demo.Order.OrderRepository.OrderRepository;
-import com.example.demo.Order.OrderService.CreateCartService;
-import com.example.demo.Order.OrderService.DeleteDetailOrderById;
-import com.example.demo.Order.OrderService.SaveCartService;
-import com.example.demo.Order.OrderService.SaveOrderDetail;
+import com.example.demo.OrderTest.OrderEntity.Orders;
+import com.example.demo.OrderTest.OrderRepository.OrderRepository;
+import com.example.demo.OrderTest.OrderService.CreateCartService;
+import com.example.demo.OrderTest.OrderService.DeleteDetailOrderById;
+import com.example.demo.OrderTest.OrderService.SaveCartService;
+import com.example.demo.OrderTest.OrderService.SaveOrderDetail;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.math.BigDecimal;
 import java.util.List;
 
 @RestController

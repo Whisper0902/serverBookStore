@@ -1,9 +1,8 @@
 package com.example.demo.Product.ProductEntity;
 
-import com.example.demo.Order.OrderEntity.OrderDetail;
-import com.example.demo.Order.OrderEntity.Orders;
+import com.example.demo.OrderTest.OrderEntity.OrderDetail;
 import jakarta.persistence.*;
-import org.hibernate.annotations.DialectOverride;
+import lombok.Builder;
 import org.springframework.stereotype.Repository;
 import java.math.BigDecimal;
 import java.util.List;
@@ -125,6 +124,23 @@ public class ProductEntity {
     public void setQuantity(BigDecimal quantity) {
         this.quantity = quantity;
     }
+
+    public ProductEntity(Long id, String title, String publisher, String genre, String author, String description, BigDecimal price, String urlImage, BigDecimal quantity, List<OrderDetail> bookId, SearchEntity book_id, int version) {
+        this.id = id;
+        this.title = title;
+        this.publisher = publisher;
+        this.genre = genre;
+        this.author = author;
+        this.description = description;
+        this.price = price;
+        this.urlImage = urlImage;
+        this.quantity = quantity;
+        this.bookId = bookId;
+        this.book_id = book_id;
+        this.version = version;
+    }
+
+
 
     @Override
     public String toString() {

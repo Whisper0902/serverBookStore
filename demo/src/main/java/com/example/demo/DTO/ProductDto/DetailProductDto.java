@@ -1,7 +1,14 @@
 package com.example.demo.DTO.ProductDto;
 
-import java.math.BigDecimal;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
+import java.math.BigDecimal;
+@Data
+@Builder
+@AllArgsConstructor
 public class DetailProductDto {
 
     private String title;

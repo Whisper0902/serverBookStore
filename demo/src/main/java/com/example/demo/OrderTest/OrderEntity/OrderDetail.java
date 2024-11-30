@@ -1,5 +1,4 @@
-package com.example.demo.Order.OrderEntity;
-import com.example.demo.Customer.CustomerEntity.CustomerAccountEntity;
+package com.example.demo.OrderTest.OrderEntity;
 import com.example.demo.Product.ProductEntity.ProductEntity;
 import jakarta.persistence.*;
 import org.springframework.stereotype.Repository;

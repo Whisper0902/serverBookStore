@@ -11,4 +11,9 @@ public interface ProductHomepage extends JpaRepository<ProductEntity, Long> {
 
     // Lấy 10 sản phẩm đầu tiên
     List<ProductEntity> findTop8ByOrderByIdAsc();
+    List<ProductEntity> findTop4ByOrderByIdAsc();
+    List<ProductEntity> findAllByAuthor(String author);
+    List<ProductEntity> findAllByGenre(String genre);
+    List<ProductEntity> findAllByPublisher(String publisher);
+    ProductEntity findByTitle(String title);
 }

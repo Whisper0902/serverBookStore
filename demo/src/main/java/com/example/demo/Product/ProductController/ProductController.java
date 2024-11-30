@@ -40,6 +40,8 @@ public class ProductController {
     private RemoveAccents removeAccents;
 
 
+
+
     @GetMapping("/GetHomepageProduct")
     public ResponseEntity<List<GetProductDto>> getHomepageProduct() {
         List<GetProductDto> productHomepage = getProductHomepageService.getProductHomepage() ;
@@ -117,8 +119,6 @@ public class ProductController {
         return new ResponseEntity<>(listSearchProduct, HttpStatus.CREATED);
 
     }
-
-
 
 
 }

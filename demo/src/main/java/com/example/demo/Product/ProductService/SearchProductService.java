@@ -1,7 +1,7 @@
 package com.example.demo.Product.ProductService;
 import com.example.demo.Product.ProductEntity.ProductEntity;
 import com.example.demo.Product.ProductEntity.SearchEntity;
-import com.example.demo.Product.ProductRepository.BookRepository;
+import com.example.demo.Product.ProductRepository.ProductHomepage;
 import com.example.demo.Product.ProductRepository.SearchRepository;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +16,7 @@ public class SearchProductService {
     private SearchRepository searchRepository;
 
     @Autowired
-    private BookRepository bookRepository;
+    private ProductHomepage productHomepage;
 
 
     public List<ProductEntity> searchProduct(String keyword)
@@ -25,7 +25,7 @@ public class SearchProductService {
        List<ProductEntity> listProductSearch = new ArrayList<>();
        for(var nSearch : listSearch)
        {
-           ProductEntity result = bookRepository.findById(nSearch.getBook_id().getId()) .orElseThrow(() -> new EntityNotFoundException("Product with ID not found"));
+           ProductEntity result = productHomepage.findById(nSearch.getBook_id().getId()) .orElseThrow(() -> new EntityNotFoundException("Product with ID not found"));
             listProductSearch.add(result);
        }
        return listProductSearch;

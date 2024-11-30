@@ -1,10 +1,10 @@
-package com.example.demo.Order.OrderService;
+package com.example.demo.OrderTest.OrderService;
 
 import com.example.demo.DTO.OrderDto.ProductOfCart;
-import com.example.demo.Order.OrderEntity.OrderDetail;
-import com.example.demo.Order.OrderEntity.Orders;
-import com.example.demo.Order.OrderRepository.OrderDetailRepository;
-import com.example.demo.Order.OrderRepository.OrderRepository;
+import com.example.demo.OrderTest.OrderEntity.OrderDetail;
+import com.example.demo.OrderTest.OrderEntity.Orders;
+import com.example.demo.OrderTest.OrderRepository.OrderDetailRepository;
+import com.example.demo.OrderTest.OrderRepository.OrderRepository;
 import com.example.demo.Product.ProductService.UpdateProductService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
