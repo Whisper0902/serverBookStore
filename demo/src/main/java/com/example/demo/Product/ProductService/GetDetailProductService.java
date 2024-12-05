@@ -13,6 +13,7 @@ public class GetDetailProductService {
 
     public ProductEntity getDetailProduct(Long id)
     {
-        return  productHomepage.findById(id).orElseThrow(() -> new RuntimeException("Product not found with id: " +id));
+       ProductEntity detailProduct = productHomepage.findById(id).orElseThrow(() -> new RuntimeException("Product not found with id: " +id));
+        return detailProduct;
     }
 }

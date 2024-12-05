@@ -14,10 +14,8 @@ public class GetProductById {
     private ProductHomepage productHomepage;
 
 
-    public ProductEntity getProductById(Long id)
-    {
-        return  productHomepage.findById(id)
-            .orElseThrow(() -> new EntityNotFoundException("Product with ID " + id + " not found"));
-
+    public ProductEntity getProductById(Long id) {
+        ProductEntity product = productHomepage.findById(id).orElseThrow(() -> new EntityNotFoundException("Product with ID " + id + " not found"));
+        return product;
     }
 }

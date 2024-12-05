@@ -77,4 +77,11 @@ public class SearchEntity {
     public void setBook_id(ProductEntity book_id) {
         this.book_id = book_id;
     }
+    @Override
+    public String toString() {
+        return "SearchEntity{" +
+                "book_id=" + book_id +
+                ", otherField=" +  id+
+                '}';
+    }
 }

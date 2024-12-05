@@ -18,24 +18,12 @@ public class ImportProductService {
         @Autowired
         private RemoveAccents removeAccents;
 
-    public ProductEntity saveBook(DetailProductDto importBookDto) {
+    public ProductEntity saveBook(ProductEntity importBookDto) {
         if (importBookDto == null || importBookDto.getTitle() == null || importBookDto.getTitle().isEmpty()) {
             throw new IllegalArgumentException("Title is required");
         }
 
-        ProductEntity book = new ProductEntity();
-        book.setTitle(importBookDto.getTitle());
-        book.setPublisher(importBookDto.getPublisher());
-        book.setGenre(importBookDto.getGenre());
-        book.setAuthor(importBookDto.getAuthor());
-        book.setDescription(importBookDto.getDescription());
-        book.setPrice(importBookDto.getPrice());
-        book.setUrlImage(importBookDto.getUrlImage());
-        book.setQuantity(importBookDto.getQuantity());
-
-        ProductEntity saveBook = productHomepage.save(book);
-
-
+        ProductEntity saveBook = productHomepage.save(importBookDto);
 
         SearchEntity searchEntity = new SearchEntity();
         searchEntity.setAuthor(saveBook.getAuthor());
@@ -47,7 +35,7 @@ public class ImportProductService {
 
         SearchEntity resultSearch = removeAccents.removeAccent(searchEntity);
 
-        searchRepository.save(resultSearch);
+        SearchEntity searchEntityResult = searchRepository.save(resultSearch);
 
         return saveBook;
     }

@@ -2,7 +2,7 @@ package com.example.demo.DTO.ProductDto;
 
 import java.math.BigDecimal;
 
-public class GetProductDto {
+public class DetailProductDAO {
     private Long id;
 
     private String title;
@@ -10,7 +10,7 @@ public class GetProductDto {
 
     private BigDecimal price;
 
-    public GetProductDto() {
+    public DetailProductDAO() {
     }
 
     public Long getId() {

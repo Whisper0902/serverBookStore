@@ -8,7 +8,7 @@ import java.text.Normalizer;
 @Service
 public class RemoveAccents {
 
-    public String removeAccent(String input) {
+    public String removeAccents(String input) {
 
 
         return Normalizer.normalize(input, Normalizer.Form.NFD)
@@ -18,12 +18,12 @@ public class RemoveAccents {
     public SearchEntity removeAccent(SearchEntity searchEntity) {
 
             SearchEntity result = new SearchEntity();
-            result.setTitle(removeAccent(searchEntity.getTitle()));
-            result.setPublisher(removeAccent(searchEntity.getPublisher()));
-            result.setGenre(removeAccent(searchEntity.getGenre()));
-            result.setDescription(removeAccent(searchEntity.getDescription()));
+            result.setTitle(removeAccents(searchEntity.getTitle()));
+            result.setPublisher(removeAccents(searchEntity.getPublisher()));
+            result.setGenre(removeAccents(searchEntity.getGenre()));
+            result.setDescription(removeAccents(searchEntity.getDescription()));
             result.setBook_id(searchEntity.getBook_id());
-            result.setAuthor(removeAccent(searchEntity.getAuthor()));
+            result.setAuthor(removeAccents(searchEntity.getAuthor()));
             return result;
 
     }

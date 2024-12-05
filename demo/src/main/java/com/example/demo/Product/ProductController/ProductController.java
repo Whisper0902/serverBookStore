@@ -1,7 +1,7 @@
 package com.example.demo.Product.ProductController;
 
 import com.example.demo.DTO.ProductDto.DetailProductDto;
-import com.example.demo.DTO.ProductDto.GetProductDto;
+import com.example.demo.DTO.ProductDto.DetailProductDAO;
 import com.example.demo.Product.ProductEntity.ProductEntity;
 import com.example.demo.Product.ProductService.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,8 +43,8 @@ public class ProductController {
 
 
     @GetMapping("/GetHomepageProduct")
-    public ResponseEntity<List<GetProductDto>> getHomepageProduct() {
-        List<GetProductDto> productHomepage = getProductHomepageService.getProductHomepage() ;
+    public ResponseEntity<List<DetailProductDAO>> getHomepageProduct() {
+        List<DetailProductDAO> productHomepage = getProductHomepageService.getProductHomepage() ;
         if (productHomepage == null || productHomepage.isEmpty()) {
             return new ResponseEntity<>( HttpStatus.NOT_FOUND);
         }
@@ -68,6 +68,17 @@ public class ProductController {
         return new ResponseEntity<>(DetailProduct, HttpStatus.CREATED);
     }
 
+    /*
+   fsdfgsfg
+   adfadf
+   fadfa
+     */
+
+    /**
+     *
+     * @param field
+     * @return
+     */
     @GetMapping("/GetProductByField")
     public ResponseEntity<List<ProductEntity>> getProductByField(@RequestParam Map<String,Object> field)
     {
@@ -98,7 +109,7 @@ public class ProductController {
     }
 
     @PostMapping("/import")
-    public ResponseEntity<ProductEntity> importBook(@RequestBody DetailProductDto importBookDto) {
+    public ResponseEntity<ProductEntity> importBook(@RequestBody ProductEntity importBookDto) {
         ProductEntity savedBook = importProductService.saveBook(importBookDto);
         if (savedBook == null) {
             return new ResponseEntity<>( HttpStatus.NOT_FOUND);
@@ -110,7 +121,7 @@ public class ProductController {
     public ResponseEntity<List<ProductEntity>> searchProductEntity(@RequestParam String keyWord)
     {
 
-        String valueKeyWord = removeAccents.removeAccent(keyWord);
+        String valueKeyWord = removeAccents.removeAccents(keyWord);
         List<ProductEntity> listSearchProduct = searchProductService.searchProduct(valueKeyWord);
         if (listSearchProduct == null || listSearchProduct.isEmpty()) {
 
