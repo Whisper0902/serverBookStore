@@ -11,11 +11,13 @@ public class DeleteProductByIdService {
     @Autowired
     private ProductHomepage productHomepage;
 
-    public ProductEntity deleteProductById(Long id)
-    {
-      ProductEntity productEntity = productHomepage.findById(id).orElseThrow(() -> new RuntimeException("Product not found with id: "+id));
-      productHomepage.deleteById(id);
-      return productEntity;
+    public ProductEntity deleteProductById(Long id) {
+        if (id == null) {
+            throw new RuntimeException("value is not type Long");
+        }
+        ProductEntity productEntity = productHomepage.findById(id).orElseThrow(() -> new RuntimeException("Product not found with id: " + id));
+        productHomepage.deleteById(id);
+        return productEntity;
 
     }
 }

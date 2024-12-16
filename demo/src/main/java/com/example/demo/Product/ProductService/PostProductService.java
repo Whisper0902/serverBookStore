@@ -1,5 +1,4 @@
 package com.example.demo.Product.ProductService;
-import com.example.demo.DTO.ProductDto.DetailProductDto;
 import com.example.demo.Product.ProductEntity.ProductEntity;
 import com.example.demo.Product.ProductEntity.SearchEntity;
 import com.example.demo.Product.ProductRepository.ProductHomepage;
@@ -7,7 +6,7 @@ import com.example.demo.Product.ProductRepository.SearchRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 @Service
-public class ImportProductService {
+public class PostProductService {
 
         @Autowired
         private ProductHomepage productHomepage;

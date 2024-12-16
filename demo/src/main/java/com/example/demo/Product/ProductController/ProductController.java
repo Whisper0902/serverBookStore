@@ -1,6 +1,5 @@
 package com.example.demo.Product.ProductController;
 
-import com.example.demo.DTO.ProductDto.DetailProductDto;
 import com.example.demo.DTO.ProductDto.DetailProductDAO;
 import com.example.demo.Product.ProductEntity.ProductEntity;
 import com.example.demo.Product.ProductService.*;
@@ -16,7 +15,7 @@ import java.util.Map;
 @RequestMapping("/books")
 public class ProductController {
     @Autowired
-    private ImportProductService importProductService;
+    private PostProductService importProductService;
 
     @Autowired
     private GetProductHomepageService getProductHomepageService;
@@ -28,7 +27,7 @@ public class ProductController {
     @Autowired
     private UpdateProductService updateProductService;
     @Autowired
-    private GetProductByFieldService getProductByFieldService;
+    private GetListProductByFieldService getListProductByFieldService;
 
     @Autowired
     private SearchProductService searchProductService;
@@ -68,26 +67,16 @@ public class ProductController {
         return new ResponseEntity<>(DetailProduct, HttpStatus.CREATED);
     }
 
-    /*
-   fsdfgsfg
-   adfadf
-   fadfa
-     */
-
-    /**
-     *
-     * @param field
-     * @return
-     */
-    @GetMapping("/GetProductByField")
-    public ResponseEntity<List<ProductEntity>> getProductByField(@RequestParam Map<String,Object> field)
+    @GetMapping("/GetProductByGenre")
+    public ResponseEntity<List<ProductEntity>> GetListProductByGenre(@RequestParam Map<String,String> fieldSearch)
     {
-        List<ProductEntity> productByField = getProductByFieldService.getProductByField(field);
+        List<ProductEntity> productByField = getListProductByFieldService.getProductByField(fieldSearch);
         if (productByField == null || productByField.isEmpty()) {
             return new ResponseEntity<>( HttpStatus.NOT_FOUND);
         }
         return new ResponseEntity<>(productByField, HttpStatus.CREATED);
     }
+
 
     @PostMapping("/DeleteById")
     public  ResponseEntity<ProductEntity> deleteProductById(@RequestParam Long id){

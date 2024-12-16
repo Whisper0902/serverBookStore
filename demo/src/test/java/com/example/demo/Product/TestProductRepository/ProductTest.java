@@ -1,4 +1,4 @@
-package com.example.demo.ProductTest.TestProductRepository;
+package com.example.demo.Product.TestProductRepository;
 
 import com.example.demo.Product.ProductEntity.ProductEntity;
 import com.example.demo.Product.ProductRepository.ProductHomepage;

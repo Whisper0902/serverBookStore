@@ -1,11 +1,10 @@
-package com.example.demo.ProductTest.TestProcuctController;
+package com.example.demo.Product.TestProcuctController;
 
 import com.example.demo.DTO.ProductDto.DetailProductDto;
 import com.example.demo.Product.ProductController.ProductController;
 import com.example.demo.Product.ProductEntity.ProductEntity;
-import com.example.demo.Product.ProductService.ImportProductService;
+import com.example.demo.Product.ProductService.PostProductService;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.hamcrest.CoreMatchers;
 import org.junit.Test;
 import org.junit.jupiter.api.BeforeEach;
 import org.mockito.ArgumentMatchers;
@@ -17,12 +16,10 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
-import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 import java.math.BigDecimal;
 
 import static org.mockito.BDDMockito.given;
-import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 
 @WebMvcTest(ProductController.class)
@@ -34,7 +31,7 @@ public class ImportProductControllerTest {
     @Autowired
     private ObjectMapper objectMapper;
     @Mock
-    private ImportProductService importProductService;
+    private PostProductService importProductService;
     @InjectMocks
     private ProductController productController;
 
