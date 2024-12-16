@@ -9,9 +9,13 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
 public class GetProductByFieldTest {
@@ -19,35 +23,43 @@ public class GetProductByFieldTest {
     private ProductHomepage productHomepage;
 
     @InjectMocks
-    private GetProductByFieldService getProductByFieldService;
+    private GetListProductByFieldService getListProductByFieldService;
 
-    Map<String, Object> fieldGenre;
-    Map<String, Object> fieldAuthor;
-    Map<String, Object> fieldPublisher;
-    Map<String,Object> fieldNull;
+    Map<String, String> fieldGenre;
+    Map<String, String> fieldAuthor;
+    Map<String, String> fieldPublisher;
+    Map<String, String> fieldNull;
+
+    Map<String,String> fieldTestFalse;
     List<ProductEntity> listByGenre;
     List<ProductEntity> listByAuthor;
     List<ProductEntity> listByPublisher;
 
-    ProductEntity product1 ;
+    List<ProductEntity> listProductEmpty;
+
+    ProductEntity product1;
     ProductEntity product2;
     ProductEntity product3;
 
 
-
     @BeforeEach
-    public void setUp(){
+    public void setUp() {
         fieldGenre = new HashMap<>();
-        fieldGenre.put("genre","Van hoc");
+        fieldGenre.put("genre", "Van hoc");
 
         fieldAuthor = new HashMap<>();
-        fieldAuthor.put("author","Nha Nam");
+        fieldAuthor.put("author", "Nha Nam");
 
         fieldPublisher = new HashMap<>();
-        fieldPublisher.put("publisher","Kim Dong");
+        fieldPublisher.put("publisher", "Kim Dong");
 
         fieldNull = new HashMap<>();
-        fieldNull.put(null,null);
+        fieldNull.put(null, null);
+        fieldTestFalse = new HashMap<>();
+        fieldTestFalse.put("genre","Van hoc hien dai");
+
+
+
 
         product1 = new ProductEntity();
         product1.setId(1L);
@@ -70,17 +82,89 @@ public class GetProductByFieldTest {
         product3.setAuthor("Nam Cao");
         product3.setPublisher("Kim Dong");
 
+
+        listByGenre = new ArrayList<>();
         listByGenre.add(product1);
         listByGenre.add(product2);
 
+        listByAuthor = new ArrayList<>();
         listByAuthor.add(product1);
         listByAuthor.add(product2);
 
+        listByPublisher = new ArrayList<>();
         listByPublisher.add(product2);
         listByPublisher.add(product3);
+
+        listProductEmpty = new ArrayList<>();
 
     }
 
     @Test
-    public void
+    public void GetListProductByGenreTest_TestValueNull_ReturnException() {
+        GetListProductByFieldService TestValueNull = new GetListProductByFieldService();
+        RuntimeException exception = assertThrows(RuntimeException.class, () ->
+        {
+            TestValueNull.getProductByField(fieldNull);
+        });
+
+        assertEquals("Value input is null", exception.getMessage());
+    }
+
+    @Test
+    public void GetListProductByGenreTest_TestSwitchInputGenre_ReturnListProduct() {
+        when(productHomepage.findListProductByGenre(product1.getGenre())).thenReturn(listByGenre);
+
+        List<ProductEntity> resultListGenre = getListProductByFieldService.getProductByField(fieldGenre);
+
+        assertEquals(false, resultListGenre.isEmpty());
+        assertEquals(product1, resultListGenre.get(0));
+    }
+
+    @Test
+    public void GetListProductByAuthorTest_TestSwitchInputAuthor_ReturnListProduct() {
+        when(productHomepage.findListProductByAuthor(product2.getAuthor())).thenReturn(listByAuthor);
+
+        List<ProductEntity> resultListAuthor = getListProductByFieldService.getProductByField(fieldAuthor);
+
+        assertEquals(false, resultListAuthor.isEmpty());
+        assertEquals(product2, resultListAuthor.get(1));
+
+    }
+
+    @Test
+    public void GetListProductByPublisherTest_TestSwitchInputPublisher_ReturnListProduct() {
+        when(productHomepage.findListProductByPublisher(product2.getPublisher())).thenReturn(listByPublisher);
+
+        List<ProductEntity> resultListPublisher = getListProductByFieldService.getProductByField(fieldPublisher);
+
+        assertEquals(false, resultListPublisher.isEmpty());
+        assertEquals(product2, resultListPublisher.get(0));
+    }
+
+    @Test
+    public void TestExceptionWhenInputValueFalse_ReturnException() {
+
+//        when(productHomepage.findListProductByGenre(null)).thenReturn(listProductEmpty);
+//
+//
+//        RuntimeException exception = assertThrows(RuntimeException.class, ()-> {
+//                getListProductByFieldService.getProductByField(fieldAuthor);
+//        });
+//        assertEquals("Not found product by fieldSearch",exception.getMessage());
+
+        when(productHomepage.findListProductByGenre("Van hoc hien dai")).thenReturn(listProductEmpty); // Danh sách rỗng
+
+        // Giả sử fieldSearch là một map chứa dữ liệu hợp lệ
+
+
+        // Act & Assert: Kiểm tra xem ngoại lệ có được ném ra khi danh sách sản phẩm là rỗng
+        RuntimeException exception = assertThrows(RuntimeException.class, () -> {
+            getListProductByFieldService.getProductByField(fieldTestFalse);
+        });
+
+        // Kiểm tra thông điệp ngoại lệ
+        assertEquals("Not found product by fieldSearch", exception.getMessage());
+    }
+
+
 }

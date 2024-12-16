@@ -17,21 +17,18 @@ public class GetListProductByFieldService {
     private ProductHomepage productHomepage;
 
 
-    public List<ProductEntity> getProductByField(Map<String,String> fieldSearch)
-    {
-        if(fieldSearch == null)
-        {
-            throw new RuntimeException("Value field search is null");
-        }
+    public List<ProductEntity> getProductByField(Map<String, String> fieldSearch) {
+
 
         List<ProductEntity> listResultProduct = new ArrayList<>();
-        for(Map.Entry<String,String> entry : fieldSearch.entrySet())
-        {
+        for (Map.Entry<String, String> entry : fieldSearch.entrySet()) {
             String keyName = entry.getKey();
             String value = entry.getValue();
+            if (keyName == null || value == null) {
+                throw new RuntimeException("Value input is null");
+            }
 
-            switch (keyName)
-            {
+            switch (keyName) {
                 case "genre":
                     listResultProduct = productHomepage.findListProductByGenre(value);
                     break;
@@ -42,11 +39,9 @@ public class GetListProductByFieldService {
                     listResultProduct = productHomepage.findListProductByPublisher(value);
                     break;
             }
-
-
         }
 
-        if(listResultProduct == null){
+        if (listResultProduct.isEmpty()) {
             throw new RuntimeException("Not found product by fieldSearch");
         }
         return listResultProduct;

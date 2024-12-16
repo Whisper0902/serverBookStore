@@ -9,7 +9,6 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 @Service
-
 public class GetProductHomepageService {
 
     @Autowired
@@ -17,8 +16,12 @@ public class GetProductHomepageService {
 
     public List<DetailProductDAO> getProductHomepage ()
     {
-
         List<ProductEntity> listDetail = productHomepage.findTop8ByOrderByIdAsc();
+
+        if(listDetail.isEmpty())
+        {
+            throw new RuntimeException("Can not find product");
+        }
         List<DetailProductDAO> listProductDAO = new ArrayList<>();
         for(var listDetails : listDetail)
         {

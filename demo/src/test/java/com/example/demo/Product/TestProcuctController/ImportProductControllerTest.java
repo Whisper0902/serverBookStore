@@ -3,7 +3,7 @@ package com.example.demo.Product.TestProcuctController;
 import com.example.demo.DTO.ProductDto.DetailProductDto;
 import com.example.demo.Product.ProductController.ProductController;
 import com.example.demo.Product.ProductEntity.ProductEntity;
-import com.example.demo.Product.ProductService.PostProductService;
+import com.example.demo.Product.ProductService.ImportProductService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.Test;
 import org.junit.jupiter.api.BeforeEach;
@@ -31,7 +31,7 @@ public class ImportProductControllerTest {
     @Autowired
     private ObjectMapper objectMapper;
     @Mock
-    private PostProductService importProductService;
+    private ImportProductService importProductService;
     @InjectMocks
     private ProductController productController;
 

@@ -15,7 +15,7 @@ import java.util.Map;
 @RequestMapping("/books")
 public class ProductController {
     @Autowired
-    private PostProductService importProductService;
+    private ImportProductService importProductService;
 
     @Autowired
     private GetProductHomepageService getProductHomepageService;
