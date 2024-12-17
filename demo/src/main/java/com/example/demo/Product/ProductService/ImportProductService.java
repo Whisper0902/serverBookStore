@@ -40,13 +40,7 @@ public class ImportProductService {
 
         SearchEntity resultSearch = removeAccents.removeAccent(searchEntity);
         SearchEntity searchEntityResult = searchRepository.save(resultSearch);
-        if(searchEntityResult.getId() == null)
-        {
-            throw new RuntimeException("Can not save search product");
-        }
 
-        return saveBook;
-    }
-
+        return saveBook;}
 }
 
