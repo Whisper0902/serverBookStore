@@ -2,6 +2,8 @@ package com.example.demo.Product.ProductService;
 
 import com.example.demo.Product.ProductEntity.ProductEntity;
 import com.example.demo.Product.ProductRepository.ProductHomepage;
+import jakarta.persistence.EntityNotFoundException;
+import org.springframework.beans.NullValueInNestedPathException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,40 +16,30 @@ public class UpdateProductService {
     @Autowired
     private ProductHomepage productHomepage;
 
-    public ProductEntity updateProduct(Map<String , Object> updateProduct,Long id)
+    public ProductEntity updateProduct(ProductEntity product)
     {
-        ProductEntity productEntity = productHomepage.findById(id).orElseThrow(() -> new RuntimeException("Product not found with id: "+id));
-        Class<?> productClass = productEntity.getClass();
-
-        for (Map.Entry<String, Object> entry : updateProduct.entrySet()) {
-            String fieldName = entry.getKey();
-            Object fieldValue = entry.getValue();
-
-
-            try {
-                // Lấy Field từ tên thuộc tính
-                Field field = productClass.getDeclaredField(fieldName);
-                field.setAccessible(true);  // Cho phép truy cập vào các thuộc tính private
-
-                // Kiểm tra kiểu dữ liệu của field và giá trị mới
-                if (fieldValue != null && field.getType().isAssignableFrom(fieldValue.getClass())) {
-                    field.set(productEntity, fieldValue);  // Cập nhật giá trị mới cho thuộc tính
-                }
-                else if (field.getType() == BigDecimal.class && fieldValue instanceof Number) {
-                    // Chuyển đổi từ Number (như Double) sang BigDecimal
-                    BigDecimal bigDecimalValue = BigDecimal.valueOf(((Number) fieldValue).doubleValue());
-                    field.set(productEntity, bigDecimalValue);  // Cập nhật giá trị BigDecimal
-                }
-
-            } catch (NoSuchFieldException | IllegalAccessException e) {
-                System.out.println("Lỗi khi cập nhật thuộc tính: " + fieldName);
-                e.printStackTrace();
-            }
+        if(product == null)
+        {
+            throw new RuntimeException("Value of product is null");
         }
 
-        productHomepage.save(productEntity);
-        return productEntity;
+        ProductEntity resultProduct = productHomepage.findById(product.getId()).orElseThrow(() -> new EntityNotFoundException("Product with ID " + product.getId() + " not found"));
 
+        resultProduct.setId(product.getId());
+        resultProduct.setDescription(product.getDescription());
+        resultProduct.setAuthor(product.getAuthor());
+        resultProduct.setTitle(product.getTitle());
+        resultProduct.setGenre(product.getGenre());
+        resultProduct.setPrice(product.getPrice());
+        resultProduct.setQuantity(product.getQuantity());
+        resultProduct.setUrlImage(product.getUrlImage());
+
+        ProductEntity productUpdate = productHomepage.save(resultProduct);
+        if(productUpdate == null || productUpdate.getId() == null)
+        {
+            throw new RuntimeException("Can not update product");
+        }
+        return productUpdate;
 
     }
 

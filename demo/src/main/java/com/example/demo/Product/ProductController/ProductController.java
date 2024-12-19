@@ -67,7 +67,7 @@ public class ProductController {
         return new ResponseEntity<>(DetailProduct, HttpStatus.CREATED);
     }
 
-    @GetMapping("/GetProductByGenre")
+    @GetMapping("/GetProductByField")
     public ResponseEntity<List<ProductEntity>> GetListProductByGenre(@RequestParam Map<String,String> fieldSearch)
     {
         List<ProductEntity> productByField = getListProductByFieldService.getProductByField(fieldSearch);
@@ -88,9 +88,9 @@ public class ProductController {
     }
 
     @PostMapping("/UpdateProduct")
-    public ResponseEntity<ProductEntity> updateProductById(@RequestBody Map<String, Object> bookMapUpdate,@RequestParam Long id)
+    public ResponseEntity<ProductEntity> updateProduct(@RequestBody ProductEntity product)
     {
-        ProductEntity updateProduct = updateProductService.updateProduct(bookMapUpdate,id);
+        ProductEntity updateProduct = updateProductService.updateProduct(product);
         if (updateProduct == null) {
             return new ResponseEntity<>( HttpStatus.NOT_FOUND);
         }
