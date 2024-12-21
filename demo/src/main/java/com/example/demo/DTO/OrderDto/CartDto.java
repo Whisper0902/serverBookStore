@@ -8,14 +8,31 @@ import java.util.List;
 
 public class CartDto {
 
+    private Long id;
     private String paymentMethod;
     private CustomerAccountEntity customerAccount;
     private BigDecimal totalCart;
+
+    private CustomerAccountEntity CustomerId;
     private LocalDateTime createdTime;
     private LocalDateTime updateTime;
 
 
+    public Long getId() {
+        return id;
+    }
 
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public CustomerAccountEntity getCustomerId() {
+        return CustomerId;
+    }
+
+    public void setCustomerId(CustomerAccountEntity customerId) {
+        CustomerId = customerId;
+    }
 
     public String getPaymentMethod() {
         return paymentMethod;

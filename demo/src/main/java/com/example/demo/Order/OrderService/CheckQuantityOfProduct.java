@@ -1,4 +1,4 @@
-package com.example.demo.OrderTest.OrderService;
+package com.example.demo.Order.OrderService;
 
 import com.example.demo.Product.ProductRepository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;

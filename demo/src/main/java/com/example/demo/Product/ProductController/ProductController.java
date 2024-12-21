@@ -39,60 +39,61 @@ public class ProductController {
     private RemoveAccents removeAccents;
 
 
-
-
     @GetMapping("/GetHomepageProduct")
     public ResponseEntity<List<DetailProductDAO>> getHomepageProduct() {
-        List<DetailProductDAO> productHomepage = getProductHomepageService.getProductHomepage() ;
-        if (productHomepage == null || productHomepage.isEmpty()) {
-            return new ResponseEntity<>( HttpStatus.NOT_FOUND);
+        List<DetailProductDAO> productHomepage = getProductHomepageService.getProductHomepage();
+        if (productHomepage.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
         return new ResponseEntity<>(productHomepage, HttpStatus.CREATED);
     }
+
     @GetMapping("/GetProductById")
-    public ResponseEntity<ProductEntity> GetProductById(@RequestParam Long id) {
-        ProductEntity product = getProductById.getProductById(id) ;
-        if (product == null ) {
-            return new ResponseEntity<>( HttpStatus.NOT_FOUND);
+
+    public ResponseEntity<ProductEntity> getProductById(@RequestParam Long id) {
+        ProductEntity product = getProductById.getProductById(id);
+        if (product.getId() == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
         return new ResponseEntity<>(product, HttpStatus.CREATED);
     }
 
     @GetMapping("/GetDetailProduct")
     public ResponseEntity<ProductEntity> getDetailProduct(@RequestParam Long id) {
-        ProductEntity DetailProduct = getDetailProductService.getDetailProduct(id) ;
-        if (DetailProduct == null ) {
-            return new ResponseEntity<>( HttpStatus.NOT_FOUND);
+        ProductEntity DetailProduct = getDetailProductService.getDetailProduct(id);
+        if (DetailProduct.getId() == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
         return new ResponseEntity<>(DetailProduct, HttpStatus.CREATED);
     }
 
     @GetMapping("/GetProductByField")
-    public ResponseEntity<List<ProductEntity>> GetListProductByGenre(@RequestParam Map<String,String> fieldSearch)
-    {
+    public ResponseEntity<List<ProductEntity>> getListProductByField(@RequestParam Map<String, String> fieldSearch) {
         List<ProductEntity> productByField = getListProductByFieldService.getProductByField(fieldSearch);
-        if (productByField == null || productByField.isEmpty()) {
-            return new ResponseEntity<>( HttpStatus.NOT_FOUND);
+        if (productByField.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
         return new ResponseEntity<>(productByField, HttpStatus.CREATED);
     }
 
 
     @PostMapping("/DeleteById")
-    public  ResponseEntity<ProductEntity> deleteProductById(@RequestParam Long id){
+    public ResponseEntity<ProductEntity> deleteProductById(@RequestParam Long id) {
         ProductEntity deleteProduct = deleteProductByIdService.deleteProductById(id);
-        if (deleteProduct == null) {
-            return new ResponseEntity<>( HttpStatus.NOT_FOUND);
+        if (deleteProduct.getId() == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+
         }
+
         return new ResponseEntity<>(deleteProduct, HttpStatus.ACCEPTED);
     }
 
+
     @PostMapping("/UpdateProduct")
-    public ResponseEntity<ProductEntity> updateProduct(@RequestBody ProductEntity product)
-    {
+    public ResponseEntity<ProductEntity> updateProduct(@RequestBody ProductEntity product) {
         ProductEntity updateProduct = updateProductService.updateProduct(product);
-        if (updateProduct == null) {
-            return new ResponseEntity<>( HttpStatus.NOT_FOUND);
+        if (updateProduct.getId() == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
         return new ResponseEntity<>(updateProduct, HttpStatus.CREATED);
     }
@@ -100,21 +101,20 @@ public class ProductController {
     @PostMapping("/import")
     public ResponseEntity<ProductEntity> importBook(@RequestBody ProductEntity importBookDto) {
         ProductEntity savedBook = importProductService.saveBook(importBookDto);
-        if (savedBook == null) {
-            return new ResponseEntity<>( HttpStatus.NOT_FOUND);
+        if (savedBook.getId() == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
         return new ResponseEntity<>(savedBook, HttpStatus.CREATED);
     }
 
     @GetMapping("/searchProduct")
-    public ResponseEntity<List<ProductEntity>> searchProductEntity(@RequestParam String keyWord)
-    {
+    public ResponseEntity<List<ProductEntity>> searchProductEntity(@RequestParam String keyWord) {
 
         String valueKeyWord = removeAccents.removeAccents(keyWord);
         List<ProductEntity> listSearchProduct = searchProductService.searchProduct(valueKeyWord);
-        if (listSearchProduct == null || listSearchProduct.isEmpty()) {
+        if (listSearchProduct.isEmpty()) {
 
-            return new ResponseEntity<>( HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
         return new ResponseEntity<>(listSearchProduct, HttpStatus.CREATED);
 

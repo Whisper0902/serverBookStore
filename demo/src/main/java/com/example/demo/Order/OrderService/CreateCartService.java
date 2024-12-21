@@ -1,7 +1,7 @@
-package com.example.demo.OrderTest.OrderService;
+package com.example.demo.Order.OrderService;
 
-import com.example.demo.OrderTest.OrderEntity.Orders;
-import com.example.demo.OrderTest.OrderRepository.OrderRepository;
+import com.example.demo.Order.OrderEntity.Orders;
+import com.example.demo.Order.OrderRepository.OrderRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -12,7 +12,7 @@ public class CreateCartService {
     private OrderRepository orderRepository;
 
 
-    public Orders CreateCartService (){
+    public Orders createCart (){
 
         Orders orders = new Orders();
 

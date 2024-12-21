@@ -1,4 +1,4 @@
-package com.example.demo.OrderTest.OrderEntity;
+package com.example.demo.Order.OrderEntity;
 
 import com.example.demo.Customer.CustomerEntity.CustomerAccountEntity;
 import com.example.demo.Customer.CustomerEntity.CustomerAddressEntity;

@@ -1,5 +1,5 @@
 package com.example.demo.Customer.CustomerEntity;
-import com.example.demo.OrderTest.OrderEntity.Orders;
+import com.example.demo.Order.OrderEntity.Orders;
 import jakarta.persistence.*;
 import org.springframework.stereotype.Repository;
 import java.time.LocalDateTime;

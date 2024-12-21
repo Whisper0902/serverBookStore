@@ -28,6 +28,8 @@ public class UpdateProductServiceTest {
     private ProductEntity product;
     private ProductEntity productUpdate;
 
+
+
     private ProductEntity nullProduct;
 
     @BeforeEach
@@ -51,6 +53,8 @@ public class UpdateProductServiceTest {
         productUpdate.setDescription("Toi da xa noi nay là câu chuyện mang tính khoa học");
         productUpdate.setPrice(BigDecimal.valueOf(200));
         productUpdate.setPublisher("Tho Ca");
+
+
 
     }
 
@@ -88,6 +92,8 @@ public class UpdateProductServiceTest {
         assertEquals("Truyen ngan",resultProductUpdate.getGenre());
         assertEquals(BigDecimal.valueOf(200),resultProductUpdate.getPrice());
     }
+
+
 
 
 }
