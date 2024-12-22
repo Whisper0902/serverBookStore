@@ -55,7 +55,7 @@ public class SaveCartTest {
         NoSuchElementException exception = assertThrows(NoSuchElementException.class,()->{
             saveCartService.saveCart(cartDtoNull);
         });
-        Assertions.assertEquals("No order is found",exception.getMessage());
+        Assertions.assertEquals("No order is empty",exception.getMessage());
     }
 
     @Test

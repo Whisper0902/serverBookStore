@@ -15,8 +15,13 @@ public class GetCustomerService {
     private CustomerRepository customerRepository;
 
 
-    public List<CustomerAccountEntity> getCustomerService ()
+    public List<CustomerAccountEntity> getCustomer ()
     {
-      return customerRepository.findAll();
+      List<CustomerAccountEntity> resultList = customerRepository.findAll();
+      if(resultList.isEmpty())
+      {
+          throw new RuntimeException("Not found customer");
+      }
+      return resultList;
     }
 }

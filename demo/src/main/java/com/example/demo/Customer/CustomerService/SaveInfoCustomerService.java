@@ -7,13 +7,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class SaveInfoCustomer {
+public class SaveInfoCustomerService {
 
     @Autowired
     private AddressCustomerRepo addressCustomerRepo;
 
-    public CustomerAddressEntity saveInfoCustomerService(CustomerAddressEntity customerAddress)
+    public CustomerAddressEntity saveInfoCustomer(CustomerAddressEntity customerAddress)
     {
-       return addressCustomerRepo.save(customerAddress);
+       CustomerAddressEntity result = addressCustomerRepo.save(customerAddress);
+        if(result.getId() == null){
+            throw new RuntimeException("Can not save customer address");
+        }
+        return result;
     }
 }
