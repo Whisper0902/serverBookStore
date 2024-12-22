@@ -3,6 +3,7 @@ package com.example.demo.Order.OrderController;
 import com.beust.ah.A;
 import com.example.demo.DTO.OrderDto.CartDto;
 import com.example.demo.DTO.OrderDto.ProductOfCart;
+import com.example.demo.Order.OrderEntity.OrderDetail;
 import com.example.demo.Order.OrderEntity.Orders;
 import com.example.demo.Order.OrderService.CreateCartService;
 import com.example.demo.Order.OrderService.SaveCartService;
@@ -47,9 +48,9 @@ public class OrderControllerTest {
 
     private CartDto cartDto;
 
-    private ProductOfCart productOfCart;
-    private List<ProductOfCart> productOfCartListNull;
-    private List<ProductOfCart> productOfCartList;
+    private OrderDetail productOfCart;
+    private List<OrderDetail> productOfCartListNull;
+    private List<OrderDetail> productOfCartList;
 
     @BeforeEach
     public void setUp() {
@@ -62,7 +63,7 @@ public class OrderControllerTest {
         cartDto = new CartDto();
         cartDto.setId(1L);
 
-        productOfCart = new ProductOfCart();
+        productOfCart = new OrderDetail();
         productOfCart.setQuantity(BigDecimal.valueOf(2));
 
         productOfCartList = new ArrayList<>();
@@ -115,18 +116,18 @@ public class OrderControllerTest {
 
     @Test
     public void saveCartController_WhenSaveListDetailProductNotAccepted_ReturnHttpStatusNotAcceptable(){
-        when(saveOrderDetail.saveOrderDetail(productOfCartListNull,1L)).thenReturn(productOfCartListNull);
+        when(saveOrderDetail.saveOrderDetail(productOfCartListNull)).thenReturn(productOfCartListNull);
 
-        ResponseEntity<List<ProductOfCart>> responseEntity = orderController.saveOrderDetailController(productOfCartListNull,1L);
+        ResponseEntity<List<OrderDetail>> responseEntity = orderController.saveOrderDetailController(productOfCartListNull);
 
         Assertions.assertEquals(HttpStatus.NOT_ACCEPTABLE,responseEntity.getStatusCode());
     }
 
     @Test
     public void saveCartController_WhenSaveProductAccepted_ReturnHttpStatusCreate(){
-        when(saveOrderDetail.saveOrderDetail(productOfCartList,1L)).thenReturn(productOfCartList);
+        when(saveOrderDetail.saveOrderDetail(productOfCartList)).thenReturn(productOfCartList);
 
-        ResponseEntity<List<ProductOfCart>> responseEntity = orderController.saveOrderDetailController(productOfCartList,1L);
+        ResponseEntity<List<OrderDetail>> responseEntity = orderController.saveOrderDetailController(productOfCartList);
 
         Assertions.assertEquals(HttpStatus.CREATED,responseEntity.getStatusCode());
         Assertions.assertNotNull(responseEntity);

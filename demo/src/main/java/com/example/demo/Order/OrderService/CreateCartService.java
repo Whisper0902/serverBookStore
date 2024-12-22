@@ -12,11 +12,15 @@ public class CreateCartService {
     private OrderRepository orderRepository;
 
 
-    public Orders createCart (){
+    public Orders createCart() {
 
         Orders orders = new Orders();
-
-       return orderRepository.save(orders);
+        Orders ordersResult = orderRepository.save(orders);
+        if (ordersResult.getId() == null)
+        {
+            throw new RuntimeException("Can not save order");
+        }
+        return ordersResult;
     }
 
 }

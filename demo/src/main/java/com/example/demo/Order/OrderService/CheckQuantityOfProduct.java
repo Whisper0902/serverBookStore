@@ -18,7 +18,10 @@ public class CheckQuantityOfProduct {
 
         int updatedRows = productRepository.updateProductQuantity(productId, purchaseQuantity);
 
-
+        if(updatedRows < 0)
+        {
+            throw new RuntimeException("There isn't enough stock left");
+        }
         return updatedRows > 0;
     }
 

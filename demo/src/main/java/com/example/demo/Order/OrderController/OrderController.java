@@ -1,6 +1,7 @@
 package com.example.demo.Order.OrderController;
 import com.example.demo.DTO.OrderDto.CartDto;
 import com.example.demo.DTO.OrderDto.ProductOfCart;
+import com.example.demo.Order.OrderEntity.OrderDetail;
 import com.example.demo.Order.OrderEntity.Orders;
 import com.example.demo.Order.OrderRepository.OrderRepository;
 import com.example.demo.Order.OrderService.CreateCartService;
@@ -52,9 +53,9 @@ public class OrderController {
     }
 
     @PostMapping("/saveOrderDetail")
-    public ResponseEntity<List<ProductOfCart>> saveOrderDetailController(@RequestBody List<ProductOfCart> listProduct ,@RequestParam Long OrderId)
+    public ResponseEntity<List<OrderDetail>> saveOrderDetailController(@RequestBody List<OrderDetail> listProduct )
     {
-        List<ProductOfCart> listProductSave = saveOrderDetail.saveOrderDetail(listProduct,OrderId);
+        List<OrderDetail> listProductSave = saveOrderDetail.saveOrderDetail(listProduct);
         if( listProductSave.isEmpty() )
         {
             return new ResponseEntity<>( HttpStatus.NOT_ACCEPTABLE);
